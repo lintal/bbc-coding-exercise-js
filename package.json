@@ -1,0 +1,23 @@
+{
+  "name": "bbc-coding-exercise",
+  "version": "1.0.0",
+  "description": "A simple coding exercise in javascript.",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lintal/bbc-coding-exercise-js.git"
+  },
+  "author": "Alex Lintott <alexander.lintott@bbc.co.uk>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lintal/bbc-coding-exercise-js/issues"
+  },
+  "homepage": "https://github.com/lintal/bbc-coding-exercise-js#readme",
+  "dependencies": {
+    "aws-sdk": "^2.1033.0"
+  }
+}
