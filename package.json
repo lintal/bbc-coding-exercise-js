@@ -19,5 +19,11 @@
   "homepage": "https://github.com/lintal/bbc-coding-exercise-js#readme",
   "dependencies": {
     "aws-sdk": "^2.1033.0"
+  },
+  "devDependencies": {
+    "jest": "^27.3.1"
+  },
+  "jest": {
+    "setupFiles": ["./tests/init.js"]
   }
 }

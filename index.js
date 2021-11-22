@@ -3,7 +3,7 @@ const AWS = require('aws-sdk');
 const s3 = new AWS.S3();
 const Bucket = ''; // How will you get the bucket name?
 
-exports.handler = (event) => {
+exports.handler = async (event) => {
   // event.Records[]; // Will contain a list of events from SQS that you need to process.
 
   // You will need to get the current media-RSS document(s) from S3:
