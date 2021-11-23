@@ -1,21 +1,43 @@
+const fs = require('fs');
 const AWS = jest.createMockFromModule('aws-sdk');
 
-let returnData = {};
-AWS.__setS3GetObjectReturnData = (data) => {
-  returnData = data;
+class MockAwsError extends Error {
+  constructor(message, meta) {
+    super(message);
+
+    this.code = meta.code;
+    this.statusCode = meta.statusCode
+    this.retryable = false;
+  }
 }
 
 const getObject = jest.fn(({ Bucket, Key }) => {
-  const content = Buffer.from(
-    JSON.stringify(returnData),
-    'utf8',
-  );
-  
-  return { promise: async () => ({
-    Body: content,
-    ContentType: 'application/json',
-    ContentLength: content.length,
-  })}
+  const path = `./tests/data/${Key}`;
+  let content;
+
+  if (fs.existsSync(path)) {
+    content = fs.readFileSync(path);
+  }
+
+  return {
+    promise: async () => {
+      if (content) {
+        return {
+          Body: content,
+          ContentType: 'application/json',
+          ContentLength: content.length,
+        }
+      }
+
+      throw new MockAwsError(
+        'NoSuchKey: The specified key does not exist.',
+        {
+          code: 'NoSuchKey',
+          statusCode: 404,
+        },
+      );
+    }
+  }
 });
 AWS.__getObjectSpy = getObject;
 
