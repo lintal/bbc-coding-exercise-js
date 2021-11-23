@@ -1,6 +1,27 @@
-const handler = require('../index').handler;
+const MockAWS = require('aws-sdk');
+const { handler } = require('../index');
 
-test.todo('it should add programme to our RSS document');
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
+test('it should add programme to our RSS document', async () => {
+  MockAWS.__setS3GetObjectReturnData({
+    Bucket: 'my-bucket',
+    Key: 'object-key.mp3',
+  });
+
+  await handler();
+
+  expect(MockAWS.__getObjectSpy).toHaveBeenCalled();
+  expect(MockAWS.__getObjectSpy).toHaveBeenCalledWith({
+    Bucket: 'my-bucket',
+    Key: 'object-key.mp3',
+  });
+
+  expect(MockAWS.__putObjectSpy).toHaveBeenCalled();
+  expect(MockAWS.__putObjectPromiseSpy).toHaveBeenCalled();
+});
 
 test.todo('it should add multiple programmes to our RSS document');
 

@@ -21,9 +21,12 @@
     "aws-sdk": "^2.1033.0"
   },
   "devDependencies": {
+    "@types/jest": "^27.0.3",
     "jest": "^27.3.1"
   },
   "jest": {
-    "setupFiles": ["./tests/init.js"]
+    "setupFiles": [
+      "./tests/init.js"
+    ]
   }
 }
