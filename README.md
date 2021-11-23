@@ -4,8 +4,8 @@ A simple coding exercise in javascript.
 ## Task
 
 You need to create a simple javascript application which will receive messages from an SQS queue
-with details of new programmes that have been published. These need to be added to media-RSS
-documents so our partners can consume these to get to the content.
+with details of new programmes that have been published. These need to be added to a JSON document
+which follows the media-RSS schema, so our partners can consume these to get to the content.
 
 This example is architected to be deployed in an AWS Lambda (serverless) environment.
 
@@ -31,7 +31,7 @@ Your handler function will receive one or more event messages. These events will
 from notifications sent to an SNS topic. An SQS queue will be subscribed to these notifications.
 Your funciton will then be triggered from these SQS messages.
 
-The resultant media-RSS documents will then need to be stored in AWS S3.
+The resultant JSON documents will then need to be stored in AWS S3.
 
 The above gives the following architecture:
 
@@ -87,16 +87,7 @@ payload in the following format:
     "SigningCertUrl": "https://sns.us-east-2.amazonaws.com/SimpleNotificationService-ac565b8b1a6c5d002d285f9598aa1d9b.pem",
     "MessageId": "95df01b4-ee98-5cb9-9903-4c221d41eb5e",
     "Message": "{ /* New programme event data */ }",
-    "MessageAttributes": {
-      "Test": {
-        "Type": "String",
-        "Value": "TestString"
-      },
-      "TestBinary": {
-        "Type": "Binary",
-        "Value": "TestBinary"
-      }
-    },
+    "MessageAttributes": {},
     "Type": "Notification",
     "UnsubscribeUrl": "https://sns.us-east-2.amazonaws.com/?Action=Unsubscribe&amp;SubscriptionArn=arn:aws:sns:us-east-2:123456789012:test-lambda:21be56ed-a058-49f5-8c98-aedd2564c486",
     "TopicArn":"arn:aws:sns:us-east-2:123456789012:sns-lambda",
@@ -215,48 +206,47 @@ Finally the new programme event `Message` will take the following format:
 
 ### Output
 
-We want to store media-RSS documents in AWS S3. These documents should be stored with an object key
+We want to store JSON documents that contain data in an RSS like schema in AWS S3. These documents should be stored with an object key
 in the following format:
 
 ```
-${parentPid}.rss
+${programme.parentPid}.json
 ```
 
 The resultant document should look as follows:
 
-```xml
-<?xml version='1.0' encoding='UTF-8'?>
-<rss version='2.0'>
-  <channel>
-    <title>BBC Minute</title>
-    <link>http://www.bbc.co.uk/programmes/p03q8kd9</link>
-    <description>
-      One minute of the world's most shareable news - updated every half an hour, 24/7.
-      Drop into the conversation of the BBC Minute team for the biggest news, sport, technology,
-      health, science, social media and business stories: all in 60 seconds
-    </description>
-    <language>en</language>
-    <image>
-      <url>https://example-images.bbc.co.uk/p09h92pk.jpg</url>
-      <title>BBC Minute</title>
-      <link>https://www.bbc.co.uk/programmes/p03q8kd9</link>
-    </image>
-    <copyright>(C) BBC 2021</copyright>
-    <!--  Set pubDate appropriately: -->
-    <pubDate>Mon, 22 Nov 2021 13:26:48 GMT</pubDate>
-    <item>
-      <title>${title}</title>
-      <description>${longSynopsis}</description>
-      <!--  Set pubDate appropriately: -->
-      <pubDate>Mon, 22 Nov 2021 13:26:48 GMT</pubDate>
-      <guid isPermaLink='false'>urn:bbc:podcast:${pid}</guid>
-      <link>https://www.bbc.co.uk/programmes/${pid}</link>
-      <!-- For simplicity, assume a length of `0` and a type of `audio/mpeg in all cases: -->
-      <enclosure url='https://example-programmes.bbc.co.uk/${versions[0].pid}.mp3' length='0'
-        type='audio/mpeg' />
-    </item>
-  </channel>
-</rss>
+```json
+{
+  "channel": {
+    "title": "BBC Minute",
+    "link": "http://www.bbc.co.uk/programmes/p03q8kd9",
+    "description": "One minute of the world's most shareable news - updated every half an hour, 24/7. Drop into the conversation of the BBC Minute team for the biggest news, sport, technology, health, science, social media and business stories: all in 60 seconds",
+    "language": "en",
+    "image": {
+      "url": "https://example-images.bbc.co.uk/p09h92pk.jpg",
+      "title": "BBC Minute",
+      "link": "https://www.bbc.co.uk/programmes/p03q8kd9"
+    },
+    "copyright": "(C) BBC 2021",
+    // Set appropriately, with the most recently published item's pubDate:
+    "pubDate": "Mon, 22 Nov 2021 13:26:48 GMT",
+    "item": [
+      {
+        "title": "${programme.title}",
+        "description": "${programme.synopses.long}",
+        // Set pubDate appropriately based on programme.versions[0].availability.dates.start:
+        "pubDate": "Mon, 22 Nov 2021 13:26:48 GMT",
+        "guid": "urn:bbc:podcast:${programme.pid}",
+        "link": "https://www.bbc.co.uk/programmes/${programme.pid}",
+        "enclosure": {
+          "url": "https://example-programmes.bbc.co.uk/${programme.versions[0].pid}.mp3",
+          "length": 0,          // Assume `0` length file for simplicity.
+          "type": "audio/mpeg"  // Assume `audio/mpeg` for simplicity.
+        }
+      }
+    ]
+  }
+}
 ```
 
 
