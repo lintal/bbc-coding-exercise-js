@@ -1,24 +1,24 @@
 {
   "audit": {
-    "eventTime": "2021-11-23T20:28:32Z"
+    "eventTime": "2021-11-23T20:57:48Z"
   },
   "programme": {
-    "pid": "p0b5zk7c",
+    "pid": "p0b5znhz",
     "parentPid": "p03q8kd9",
     "embargoed": false,
-    "title": "20:30 GMT",
+    "title": "21:00 GMT",
     "synopses": {
-      "long": "The latest shareable news from BBC Minute, published at 20:30GMT on Tuesday 23rd November 2021.",
-      "medium": "BBC Minute, published at 20:30GMT on Tuesday 23rd November 2021",
-      "short": "BBC Minute - Tues 23rd - 20:30GMT"
+      "long": "The latest shareable news from BBC Minute, published at 21:00GMT on Tuesday 23rd November 2021.",
+      "medium": "BBC Minute, published at 21:00GMT on Tuesday 23rd November 2021",
+      "short": "BBC Minute - Tues 23rd - 21:00GMT"
     },
     "versions": [{
-      "pid": "p0b5zk53",
+      "pid": "p0b5znd3",
       "durationMillis": 60000,
       "availability": {
         "revoked": false,
         "dates": {
-          "start": "2021-11-23T20:26:55Z",
+          "start": "2021-11-23T20:56:57",
           "end": null
         }
       }
