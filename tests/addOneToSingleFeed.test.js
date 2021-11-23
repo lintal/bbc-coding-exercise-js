@@ -1,8 +1,7 @@
 const MockAWS = require('aws-sdk');
-const { Console } = require('console');
-const fs = require('fs');
 const { handler } = require('../index');
 const eventFactory = require('./helpers/eventFactory');
+const publishMessage = require('./data/publish-p03q8kd9-2030Z.json');
 
 describe('Add single programme to single feed', () => {
   let putObjectCallParams;
@@ -10,8 +9,6 @@ describe('Add single programme to single feed', () => {
 
   beforeAll(async () => {
     jest.clearAllMocks();
-  
-    const publishMessage = require('./data/publish-p03q8kd9-2030Z.json');
   
     await handler(
       eventFactory.create([ publishMessage ])
@@ -39,7 +36,7 @@ describe('Add single programme to single feed', () => {
     expect(MockAWS.__putObjectPromiseSpy.mock.results[0].value.isResolved).toBe(true);
   });
   
-  test('it should add a programme to our RSS document', async () => {  
+  test('it should add a programme to our RSS document', () => {  
     expect(putObjectData.channel.item).toEqual(expect.arrayContaining([{
       title: '20:30 GMT',
       description: 'The latest shareable news from BBC Minute, published at 20:30GMT on Tuesday 23rd November 2021.',
@@ -58,8 +55,6 @@ describe('Add single programme to single feed', () => {
     expect(putObjectData.channel.pubDate).toBe('Tue, 23 Nov 2021 20:26:55 GMT');
   })
 });
-
-test.todo('it should add multiple programmes to our RSS document');
 
 test.todo('it should add different programmes to different RSS documents');
 
