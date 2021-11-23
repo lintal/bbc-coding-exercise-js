@@ -1,4 +1,6 @@
 const fs = require('fs');
+const TestablePromise = require('../tests/helpers/TestablePromise');
+
 const AWS = jest.createMockFromModule('aws-sdk');
 
 class MockAwsError extends Error {
@@ -11,8 +13,8 @@ class MockAwsError extends Error {
   }
 }
 
-const getObject = jest.fn(({ Bucket, Key }) => {
-  const path = `./tests/data/${Key}`;
+const getObject = jest.fn(({ Key }) => {
+  const path = `./tests/data/bucket/${Key}`;
   let content;
 
   if (fs.existsSync(path)) {
@@ -41,7 +43,12 @@ const getObject = jest.fn(({ Bucket, Key }) => {
 });
 AWS.__getObjectSpy = getObject;
 
-const putObjectPromise = jest.fn();
+// const putObjectPromise = jest.fn(() => ({ resolved: true }));
+const putObjectPromise = jest.fn(() => TestablePromise.factory(new Promise((resolve) => {
+  process.nextTick(() => {
+    resolve({ resolved: true });
+  })
+})));
 AWS.__putObjectPromiseSpy = putObjectPromise;
 
 const putObject = jest.fn(() => ({

@@ -1,1 +1,0 @@
-process.env.BUCKET_NAME = 'my-bucket-name';

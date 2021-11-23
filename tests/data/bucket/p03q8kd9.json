@@ -1,0 +1,29 @@
+{
+  "channel": {
+    "title": "BBC Minute",
+    "link": "http://www.bbc.co.uk/programmes/p03q8kd9",
+    "description": "One minute of the world's most shareable news - updated every half an hour, 24/7. Drop into the conversation of the BBC Minute team for the biggest news, sport, technology, health, science, social media and business stories: all in 60 seconds",
+    "language": "en",
+    "image": {
+      "url": "https://example-images.bbc.co.uk/p09h92pk.jpg",
+      "title": "BBC Minute",
+      "link": "https://www.bbc.co.uk/programmes/p03q8kd9"
+    },
+    "copyright": "(C) BBC 2021",
+    "pubDate": "Tue, 23 Nov 2021 19:59:05 GMT",
+    "item": [
+      {
+        "title": "20:00 GMT",
+        "description": "The latest shareable news from BBC Minute, published at at 20:00GMT on Tuesday 23rd November 2021.",
+        "pubDate": "Tue, 23 Nov 2021 19:59:05 GMT",
+        "guid": "urn:bbc:podcast:${programme.pid}",
+        "link": "https://www.bbc.co.uk/programmes/p0b5zdst",
+        "enclosure": {
+          "url": "https://example-programmes.bbc.co.uk/p0b5zdny.mp3",
+          "length": 0,
+          "type": "audio/mpeg"
+        }
+      }
+    ]
+  }
+}
