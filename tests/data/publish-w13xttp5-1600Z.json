@@ -1,0 +1,45 @@
+{
+  "audit": {
+    "eventTime": "2021-11-16:02:56Z"
+  },
+  "programme": {
+    "pid": "p0b5xtm9",
+    "parentPid": "w13xttp5",
+    "embargoed": false,
+    "title": "18:30 GMT",
+    "synopses": {
+      "long": "Akụkọ ga-amasị gị ịkọ mgbe ọbụla - 23rd Nov at 16:00 GMT",
+      "medium": "Akụkọ ga-amasị gị ịkọ mgbe ọbụla - 23rd Nov at 16:00 GMT",
+      "short": "Akụkọ ga-amasị gị ịkọ mgbe ọbụla - 23rd Nov at 16:00 GMT"
+    },
+    "versions": [{
+      "pid": "p0b5xtmk",
+      "durationMillis": 60000,
+      "availability": {
+        "revoked": false,
+        "dates": {
+          "start": "2021-11-16:00:34Z",
+          "end": null
+        }
+      }
+    }],
+    "images": [{
+      "pid": "p09h92pk",
+      "embargoed": false,
+      "type": "standard",
+      "author": null,
+      "title": "BBC Minute",
+      "synopses": {
+        "long": "BBC Nkeji",
+        "medium": "BBC Nkeji",
+        "short": "BBC Nkeji"
+      },
+      "asset": {},
+      "mimeType": "image/jpeg",
+      "relationshipType": "is_image_for"
+    }]
+  },
+  "publication": {
+      "updateType": "publish"
+  }
+}

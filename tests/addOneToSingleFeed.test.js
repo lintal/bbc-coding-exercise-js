@@ -53,5 +53,3 @@ describe('Add single programme to single feed', () => {
     expect(putObjectData.channel.pubDate).toBe('Tue, 23 Nov 2021 20:26:55 GMT');
   })
 });
-
-test.todo('it should ignore programmes where an RSS document does not currently exist');
