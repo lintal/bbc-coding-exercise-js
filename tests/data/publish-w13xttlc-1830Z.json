@@ -1,0 +1,45 @@
+{
+  "audit": {
+    "eventTime": "2021-11-23T18:23:08Z"
+  },
+  "programme": {
+    "pid": "p0b5yycb",
+    "parentPid": "w13xttlc",
+    "embargoed": false,
+    "title": "18:30 GMT",
+    "synopses": {
+      "long": "BBC Pidgin Minute - 23rd Nov at 18:30 GMT",
+      "medium": "BBC Pidgin Minute - 23rd Nov at 18:30 GMT",
+      "short": "BBC Pidgin Minute - 23rd Nov at 18:30 GMT"
+    },
+    "versions": [{
+      "pid": "p0b5yycj",
+      "durationMillis": 60000,
+      "availability": {
+        "revoked": false,
+        "dates": {
+          "start": "2021-11-23T18:21:24Z",
+          "end": null
+        }
+      }
+    }],
+    "images": [{
+      "pid": "p09h92pk",
+      "embargoed": false,
+      "type": "standard",
+      "author": null,
+      "title": "BBC Minute",
+      "synopses": {
+        "long": "BBC Pidgin Minute",
+        "medium": "BBC Pidgin Minute",
+        "short": "BBC Pidgin Minute"
+      },
+      "asset": {},
+      "mimeType": "image/jpeg",
+      "relationshipType": "is_image_for"
+    }]
+  },
+  "publication": {
+      "updateType": "publish"
+  }
+}

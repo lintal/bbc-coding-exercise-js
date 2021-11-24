@@ -1,0 +1,29 @@
+{
+  "channel": {
+    "title": "BBC Pidgin Minute<",
+    "link": "http://www.bbc.co.uk/programmes/w13xttlc",
+    "description": "All di local and world tori wey you suppose know in 60 seconds!",
+    "language": "en",
+    "image": {
+      "url": "https://example-images.bbc.co.uk/p09htdf9.jpg",
+      "title": "BBC Minute",
+      "link": "https://www.bbc.co.uk/programmes/w13xttlc"
+    },
+    "copyright": "(C) BBC 2021",
+    "pubDate": "Tue, 23 Nov 2021 15:51:02 GMT",
+    "item": [
+      {
+        "title": "16:00 GMT",
+        "description": "BBC Pidgin Minute - 23rd Nov at 16:00 GMT",
+        "pubDate": "Tue, 23 Nov 2021 15:51:02 GMT",
+        "guid": "urn:bbc:podcast:p0b5xqw0",
+        "link": "https://www.bbc.co.uk/programmes/p0b5xqw0",
+        "enclosure": {
+          "url": "https://example-programmes.bbc.co.uk/p0b5xqwg.mp3",
+          "length": 0,
+          "type": "audio/mpeg"
+        }
+      }
+    ]
+  }
+}

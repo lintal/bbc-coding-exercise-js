@@ -16,7 +16,7 @@
         "title": "20:00 GMT",
         "description": "The latest shareable news from BBC Minute, published at at 20:00GMT on Tuesday 23rd November 2021.",
         "pubDate": "Tue, 23 Nov 2021 19:59:05 GMT",
-        "guid": "urn:bbc:podcast:${programme.pid}",
+        "guid": "urn:bbc:podcast:p0b5zdst",
         "link": "https://www.bbc.co.uk/programmes/p0b5zdst",
         "enclosure": {
           "url": "https://example-programmes.bbc.co.uk/p0b5zdny.mp3",

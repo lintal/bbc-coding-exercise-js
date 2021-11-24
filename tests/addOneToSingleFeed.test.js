@@ -8,8 +8,6 @@ describe('Add single programme to single feed', () => {
   let putObjectData;
 
   beforeAll(async () => {
-    jest.clearAllMocks();
-  
     await handler(
       eventFactory.create([ publishMessage ])
     );
@@ -55,7 +53,5 @@ describe('Add single programme to single feed', () => {
     expect(putObjectData.channel.pubDate).toBe('Tue, 23 Nov 2021 20:26:55 GMT');
   })
 });
-
-test.todo('it should add different programmes to different RSS documents');
 
 test.todo('it should ignore programmes where an RSS document does not currently exist');
