@@ -27,6 +27,25 @@ npm install
 
 ## Instructions
 
+### Exercise 1
+
+In the first exercise, we need to handle a single "new programme" event and add this to a single
+feed. You can check your progress by running the following command:
+
+```bash
+npm run test1
+```
+
+You will need to do the following:
+
+1. Find the name of our S3 bucket. This is made available in an environment variable called `BUCKET_NAME`.
+2. Retrieve the feed document from AWS S3. The document key is in the following format: `${programme.parentPid}.json`.
+3. Add a new item to the `item` array based on the event data.
+4. Update the feed `channel.pubDate` field using the `programme.versions[0].availability.dates.start` from the event.
+5. Save the updated document back to AWS S3.
+
+## Reference
+
 Your handler function will receive one or more event messages. These events will have originated
 from notifications sent to an SNS topic. An SQS queue will be subscribed to these notifications.
 Your funciton will then be triggered from these SQS messages.
@@ -38,10 +57,6 @@ The above gives the following architecture:
 ```
 SNS -> SQS -> Handler-Function -> S3
 ```
-
-### Bucket Name
-
-You will need to identify the name of the S3 bucket. This is made available in an environment variable called `BUCKET_NAME`.
 
 ### Incoming Events
 
@@ -106,105 +121,26 @@ Finally the new programme event `Message` will take the following format:
 
 ```json
 {
-    "audit": {
-        "updateSource": {
-            "name": "galileo",
-            "activityId": "ef5f562e-0ca0-4af1-934b-299159ebe4e6"
-        },
-        "publisher": {
-            "name": "castaway",
-            "activityId": "ef5f562e-0ca0-4af1-934b-299159ebe4e6"
-        },
-        "user": {
-            "id": "example.user@bbc.co.uk",
-            "groupId": "News"
-        },
-        "eventTime": "2017-11-18T17:25:29.798Z"
+  "programme": {
+    "pid": "p011gvwj",
+    "parentPid": "p03q8kd9",
+    "title": "Programme Title",
+    "synopses": {
+      "long": "Long Synopsis",
+      "medium": "Medium Synopsis",
+      "short": "Short Synopsis"
     },
-    "programme": {
-        "pid": "p011gvwj",
-        "parentPid": "p03q8kd9",
-        "embargoed": false,
-        "type": "clip",
-        "mediaType": "audio_video",
-        "languages": [
-            "en"
-        ],
-        "title": "A TITLTE",
-        "synopses": {
-            "long": "Long Synopsis",
-            "medium": "Medium Synopsis",
-            "short": "Short Synopsis"
-        },
-        "formats": [],
-        "genres": [],
-        "embeddable": false,
-        "tags": {
-            "category": "Clip",
-            "types": {
-                "about": []
-            }
-        },
-        "taggings": [],
-        "versions": [ // Will contain only 1 version.
-            {
-                "pid": "p011gvwl",
-                "types": [
-                    "Original Version"
-                ],
-                "durationMillis": 60000,
-                "editorialAspectRatio": null,
-                "warnings": [],
-                "taggings": [],
-                "assets": [],
-                "availability": {
-                    "revoked": false,
-                    "dates": {
-                        "start": "2017-07-18T13:45:42Z",
-                        "end": null
-                    },
-                    "territories": [
-                        "uk",
-                        "nonuk"
-                    ],
-                    "platforms": [
-                        "nodrm",
-                        "pc",
-                        "stb",
-                        "mobile",
-                        "console"
-                    ]
-                }
-            }
-        ],
-        "images": [ // Will contain only 1 image.
-            {
-                "pid": "p011gw0v",
-                "embargoed": false,
-                "type": "standard",
-                "author": null,
-                "title": "A TITLE",
-                "synopses": {
-                    "long": "Long Synopsis",
-            "medium": "Medium Synopsis",
-            "short": "Short Synopsis"
-                },
-                "asset": {},
-                "mimeType": "image/jpeg",
-                "relationshipType": "is_image_for"
-            }
-        ],
-        "syndicationDestinations": [],
-        "advertistingType": "commercial",
-        "masterBrand": null,
-        "relatedLinks": []
-    },
-    "publication": {
-        "availability": null,
-        "updateType": "publish",
-        "taggingStatus": null,
-        "syndicationStatus": null
-    }
+    "versions": [ // Will contain only 1 version.
+      {
+        "pid": "p011gvwl",
+        "availability": {
+          "dates": {
+            "start": "2017-07-18T13:45:42Z"
+          }
+        }
+      }
+    ]
+  }
 }
 ```
 
