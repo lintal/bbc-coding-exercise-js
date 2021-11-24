@@ -5,7 +5,11 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test1": "jest ./tests/addOneToSingleFeed.test.js",
+    "test2": "jest ./tests/addManyToSingleFeed.test.js",
+    "test3": "jest ./tests/addManyToManyFeeds.test.js",
+    "test4": "jest ./tests/ignoreOneWithNoFeed.test.js"
   },
   "repository": {
     "type": "git",

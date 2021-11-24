@@ -8,11 +8,9 @@ exports.handler = async (event) => {
 
   // You will need to get the current media-RSS document(s) from S3:
   // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#getObject-property
-  // e.g.:
-  s3.getObject({/* Parameters go here */}).promise();
+  // e.g.: s3.getObject({/* Parameters go here */}).promise();
 
   // You will need to store the resultant document(s) using:
   // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
-  // e.g.:
-  s3.putObject({/* Parameters go here */}).promise();
+  // e.g.: s3.putObject({/* Parameters go here */}).promise();
 }
