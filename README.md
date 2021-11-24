@@ -39,6 +39,10 @@ The above gives the following architecture:
 SNS -> SQS -> Handler-Function -> S3
 ```
 
+### Bucket Name
+
+You will need to identify the name of the S3 bucket. This is made available in an environment variable called `BUCKET_NAME`.
+
 ### Incoming Events
 
 Remember, there will be layers of event data you will need to decode and subsequently process.
