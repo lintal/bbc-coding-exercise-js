@@ -260,3 +260,19 @@ npm test
 ```
 
 If all tests pass, then congratulations!
+
+### Extra step
+
+Please add an additional test to see what happens when the handler function receives a notification for a programme that we do not create a feed for.
+
+You can determine if we create a feed based on whether or not an appropriate document is returned from `S3.getObject`.
+
+In the spirit of test-driven-development, start by:
+
+1. Writing the test in the file `./tests/ignoreOneWithNoFeed.test.js`.
+2. Write the necessary code to allow the test to pass in your handler.
+3. Re-run `npm test` to see if all tests still pass.
+
+### Finally
+
+Please commit & push your changes.
