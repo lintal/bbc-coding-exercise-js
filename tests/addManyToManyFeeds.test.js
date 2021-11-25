@@ -79,11 +79,19 @@ describe('Add single programme to multiple corresponding feeds', () => {
     });
   });
 
-  test('should not over-fetch documents unnecessarily', async () => {
-    await handler(
-      eventFactory.create([ programme1, programme2, programme3 ])
-    );
+  describe('Don\'t repeat S3 calls', () => {
+    beforeAll(async () => {
+      await handler(
+        eventFactory.create([ programme1, programme2, programme3 ])
+      );
+    });
 
-    expect(MockAWS.__getObjectSpy).toHaveBeenCalledTimes(2);
+    test('should not over-fetch documents unnecessarily', () => {
+      expect(MockAWS.__getObjectSpy).toHaveBeenCalledTimes(2);
+    });
+
+    test('don\'t over-save documents unnecessarily', () => {
+      expect(MockAWS.__putObjectSpy).toHaveBeenCalledTimes(2);
+    });
   });
 });
