@@ -13,8 +13,9 @@ exports.handler = async (event) => {
   // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#getObject-property
   // e.g.: s3.getObject({/* Parameters go here */}).promise();
 
-  // When manipulating dates, you can use the `moment` library which installed. The correct output
-  // format is also specified:
+  // When manipulating dates, you can use the `moment` library which installed.
+  // https://momentjs.com/docs/
+  // The correct output format is also specified FOR YOU and can be achieved using:
   // e.g. moment('// DATE STRING GOES HERE //').utc().format(dateFormat);
 
   // You will need to store the resultant document(s) using:
