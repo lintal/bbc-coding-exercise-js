@@ -8,9 +8,7 @@ describe('Ignore where no feed', () => {
     await handler(eventFactory.create([ publishMessage ]));
   });
 
-  test.todo('it should ignore programmes where an RSS document does not currently exist');
-
   // test('it should ignore programmes where an RSS document does not currently exist', () => {
-  //   // To complete... also comment-out the `test.todo(...)` line above.
+  //   // To complete...
   // });
 });
