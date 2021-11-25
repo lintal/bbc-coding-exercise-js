@@ -4,7 +4,7 @@ const moment = require('moment');
 const s3 = new AWS.S3();
 const dateFormat = 'ddd, DD MMM YYYY H:mm:ss z';
 
-const Bucket = ''; // How will you get the bucket name?
+const Bucket = ''; // How will you get the bucket name (environment variable: BUCKET_NAME)?
 
 exports.handler = async (event) => {
   // event.Records[]; // Will contain a list of events from SQS that you need to process.

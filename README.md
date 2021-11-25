@@ -44,6 +44,74 @@ You will need to do the following:
 4. Update the feed `channel.pubDate` field using the `programme.versions[0].availability.dates.start` from the event.
 5. Save the updated document back to AWS S3.
 
+
+### Exercise 2
+
+Now, we want to expand the functionality so we can accept multiple "new programme" notifications in
+a single event. This means that `event.Records[]` will contain `>1` events. All programmes should be
+stored in the same output "feed".
+
+You can check your progress by running the following command:
+
+```bash
+npm run test2
+```
+
+You will need to do the following:
+
+1. Add some form of recusive logic to handle multiple events.
+2. Set the `channel.pubDate` with the pubDate of the most recently published NEW programme.
+
+
+### Exercise 3
+
+Next, we want to support the ability to store new programmes in different feeds, based on their
+`programme.parent_pid`.
+
+You can check your progress by running the following command:
+
+```bash
+npm run test3
+```
+
+You will need to do the following:
+1. Make sure you call the `s3.getObject` method for each feed that you need.
+    * Don't over-fetch! Only call the `s3.getObject` method ONCE for each `programme.parent_pid`.
+2. Persist each of the updated "feed" documents.
+    * Similarly, be careful not to save the feed documents multiple times - only once for each feed.
+
+### Exercise 4
+
+Finally for some Test-Driven-Development (TDD). In this exercise, you will be writing the test case
+and then the code necessary to pass the test. The scenario we are trying to solve can be described
+as follows:
+
+* **Given** a new programme notification is received.
+* **When** no corresponding feed document exists.
+* **Then** we do not want to PUT a new document into AWS S3.
+
+You can check your progress by running the following command:
+
+```bash
+npm run test4
+```
+
+Please write your test case in the file: `./tests/ignoreOneWithNoFeed.test.js`.
+
+### Done?
+
+Let's make sure nothing broke with your changes. Let's run the whole test suite using the following
+command:
+
+```bash
+npm test
+```
+
+If all tests pass, then congratulations!
+
+Please commit & push your changes, and ensure your forked repository can be accessed by @lintal &
+@jcable on GitHub, or is made public.
+
 ## Reference
 
 Your handler function will receive one or more event messages. These events will have originated
@@ -146,8 +214,8 @@ Finally the new programme event `Message` will take the following format:
 
 ### Output
 
-We want to store JSON documents that contain data in an RSS like schema in AWS S3. These documents should be stored with an object key
-in the following format:
+We want to store JSON documents that contain data in an RSS like schema in AWS S3. These documents
+should be stored with an object key in the following format:
 
 ```
 ${programme.parentPid}.json
@@ -188,31 +256,3 @@ The resultant document should look as follows:
   }
 }
 ```
-
-
-### Done?
-
-Think you have completed the task - let's see.
-Run:
-
-```bash
-npm test
-```
-
-If all tests pass, then congratulations!
-
-### Extra step
-
-Please add an additional test to see what happens when the handler function receives a notification for a programme that we do not create a feed for.
-
-You can determine if we create a feed based on whether or not an appropriate document is returned from `S3.getObject`.
-
-In the spirit of test-driven-development, start by:
-
-1. Writing the test in the file `./tests/ignoreOneWithNoFeed.test.js`.
-2. Write the necessary code to allow the test to pass in your handler.
-3. Re-run `npm test` to see if all tests still pass.
-
-### Finally
-
-Please commit & push your changes.
