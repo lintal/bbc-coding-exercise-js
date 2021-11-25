@@ -35,11 +35,11 @@ describe('Add single programme to multiple corresponding feeds', () => {
     });
   
     test('it should put our first programme in it\'s corresponding feed', () => {
-      p03q8kd9.channel.pubDate = 'Tue, 23 Nov 2021 20:26:55 GMT';
+      p03q8kd9.channel.pubDate = 'Tue, 23 Nov 2021 20:26:55 UTC';
       p03q8kd9.channel.item.push({
         title: '20:30 GMT',
         description: 'The latest shareable news from BBC Minute, published at 20:30GMT on Tuesday 23rd November 2021.',
-        pubDate: 'Tue, 23 Nov 2021 20:26:55 GMT',
+        pubDate: 'Tue, 23 Nov 2021 20:26:55 UTC',
         guid: 'urn:bbc:podcast:p0b5zk7c',
         link: 'https://www.bbc.co.uk/programmes/p0b5zk7c',
         enclosure: {
@@ -57,11 +57,11 @@ describe('Add single programme to multiple corresponding feeds', () => {
     });
   
     test('it should put our second programme in it\'s corresponding feed', () => {
-      w13xttlc.channel.pubDate = 'Tue, 23 Nov 2021 18:21:24 GMT';
+      w13xttlc.channel.pubDate = 'Tue, 23 Nov 2021 18:21:24 UTC';
       w13xttlc.channel.item.push({
         title: '18:30 GMT',
         description: 'BBC Pidgin Minute - 23rd Nov at 18:30 GMT',
-        pubDate: 'Tue, 23 Nov 2021 18:21:24 GMT',
+        pubDate: 'Tue, 23 Nov 2021 18:21:24 UTC',
         guid: 'urn:bbc:podcast:p0b5yycb',
         link: 'https://www.bbc.co.uk/programmes/p0b5yycb',
         enclosure: {

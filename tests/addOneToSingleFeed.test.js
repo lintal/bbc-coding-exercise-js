@@ -38,7 +38,7 @@ describe('Add single programme to single feed', () => {
     expect(putObjectData.channel.item).toEqual(expect.arrayContaining([{
       title: '20:30 GMT',
       description: 'The latest shareable news from BBC Minute, published at 20:30GMT on Tuesday 23rd November 2021.',
-      pubDate: 'Tue, 23 Nov 2021 20:26:55 GMT',
+      pubDate: 'Tue, 23 Nov 2021 20:26:55 UTC',
       guid: 'urn:bbc:podcast:p0b5zk7c',
       link: 'https://www.bbc.co.uk/programmes/p0b5zk7c',
       enclosure: {
@@ -50,6 +50,6 @@ describe('Add single programme to single feed', () => {
   });
 
   test('it should have updated the RSS document\'s pubDate', () => {
-    expect(putObjectData.channel.pubDate).toBe('Tue, 23 Nov 2021 20:26:55 GMT');
+    expect(putObjectData.channel.pubDate).toBe('Tue, 23 Nov 2021 20:26:55 UTC');
   })
 });

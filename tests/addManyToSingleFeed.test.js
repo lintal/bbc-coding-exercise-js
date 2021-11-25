@@ -23,7 +23,7 @@ describe('Add many programmes to single feed', () => {
     expect(putObjectData.channel.item).toEqual(expect.arrayContaining([{
       title: '20:30 GMT',
       description: 'The latest shareable news from BBC Minute, published at 20:30GMT on Tuesday 23rd November 2021.',
-      pubDate: 'Tue, 23 Nov 2021 20:26:55 GMT',
+      pubDate: 'Tue, 23 Nov 2021 20:26:55 UTC',
       guid: 'urn:bbc:podcast:p0b5zk7c',
       link: 'https://www.bbc.co.uk/programmes/p0b5zk7c',
       enclosure: {
@@ -36,7 +36,7 @@ describe('Add many programmes to single feed', () => {
     expect(putObjectData.channel.item).toEqual(expect.arrayContaining([{
       title: '21:00 GMT',
       description: 'The latest shareable news from BBC Minute, published at 21:00GMT on Tuesday 23rd November 2021.',
-      pubDate: 'Tue, 23 Nov 2021 20:56:57 GMT',
+      pubDate: 'Tue, 23 Nov 2021 20:56:57 UTC',
       guid: 'urn:bbc:podcast:p0b5znhz',
       link: 'https://www.bbc.co.uk/programmes/p0b5znhz',
       enclosure: {
@@ -55,7 +55,7 @@ describe('Add many programmes to single feed', () => {
     putObjectCallParams = MockAWS.__putObjectSpy.mock.calls[0][0];
     putObjectData = JSON.parse(putObjectCallParams.Body);
 
-    expect(putObjectData.channel.pubDate).toBe('Tue, 23 Nov 2021 20:56:57 GMT');
+    expect(putObjectData.channel.pubDate).toBe('Tue, 23 Nov 2021 20:56:57 UTC');
   });
 
   test('it should set the RSS document\'s pubDate to match the latest episode - reversed', async () => {
@@ -66,6 +66,6 @@ describe('Add many programmes to single feed', () => {
     putObjectCallParams = MockAWS.__putObjectSpy.mock.calls[0][0];
     putObjectData = JSON.parse(putObjectCallParams.Body);
 
-    expect(putObjectData.channel.pubDate).toBe('Tue, 23 Nov 2021 20:56:57 GMT');
+    expect(putObjectData.channel.pubDate).toBe('Tue, 23 Nov 2021 20:56:57 UTC');
   });
 });
