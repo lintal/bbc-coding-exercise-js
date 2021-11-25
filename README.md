@@ -118,7 +118,7 @@ If all tests pass, then congratulations!
 Please commit & push your changes, and ensure your forked repository can be accessed by `@lintal` &
 `@jcable` on GitHub, or is made public.
 
-## Reference
+## Data Reference
 
 Your handler function will receive one or more event messages. These events will have originated
 from notifications sent to an SNS topic. An SQS queue will be subscribed to these notifications.
