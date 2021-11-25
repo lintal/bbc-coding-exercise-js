@@ -7,6 +7,12 @@ You need to create a simple javascript application which will receive messages f
 with details of new programmes that have been published. These need to be added to a JSON document
 which follows the media-RSS schema, so our partners can consume these to get to the content.
 
+The architecture of this application is as follows:
+
+```
+SNS -> SQS -> Handler-Function -> S3
+```
+
 This example is architected to be deployed in an AWS Lambda (serverless) environment.
 
 ## Prerequisites
@@ -16,7 +22,7 @@ This example is architected to be deployed in an AWS Lambda (serverless) environ
 * Github configured.
 * Creating a fork of this repository.
 
-Please make sure you share your forked repository with @lintal & @jcable on GitHub, or just make it
+Please make sure you share your forked repository with `@lintal` & `@jcable` on GitHub, or just make it
 public.
 
 Before you begin, install the required dependencies using:
@@ -109,8 +115,8 @@ npm test
 
 If all tests pass, then congratulations!
 
-Please commit & push your changes, and ensure your forked repository can be accessed by @lintal &
-@jcable on GitHub, or is made public.
+Please commit & push your changes, and ensure your forked repository can be accessed by `@lintal` &
+`@jcable` on GitHub, or is made public.
 
 ## Reference
 
@@ -136,7 +142,7 @@ exports.handler = (event) => {
 }
 ```
 
-SQS messages take the following format:
+Each SQS message takes the following format:
 
 ```json
 {
@@ -159,7 +165,7 @@ SQS messages take the following format:
 // Copied from: https://docs.aws.amazon.com/lambda/latest/dg/with-sqs-example.html#with-sqs-create-test-function
 ```
 
-As raw SNS message delivery will be switched `off`, the body of the SQS message will contain a JSON
+As raw SNS message delivery will be switched `off`, the body of the SQS message `body` will contain a JSON
 payload in the following format:
 
 ```json
@@ -185,7 +191,7 @@ payload in the following format:
 // Copied from: https://docs.aws.amazon.com/lambda/latest/dg/with-sns.html
 ```
 
-Finally the new programme event `Message` will take the following format:
+Finally the new programme event `Sns.Message` will take the following format:
 
 ```json
 {
@@ -237,13 +243,13 @@ The resultant document should look as follows:
     },
     "copyright": "(C) BBC 2021",
     // Set appropriately, with the most recently published item's pubDate:
-    "pubDate": "Mon, 22 Nov 2021 13:26:48 GMT",
+    "pubDate": "Mon, 22 Nov 2021 13:26:48 UTC",
     "item": [
       {
         "title": "${programme.title}",
         "description": "${programme.synopses.long}",
         // Set pubDate appropriately based on programme.versions[0].availability.dates.start:
-        "pubDate": "Mon, 22 Nov 2021 13:26:48 GMT",
+        "pubDate": "Mon, 22 Nov 2021 13:26:48 UTC",
         "guid": "urn:bbc:podcast:${programme.pid}",
         "link": "https://www.bbc.co.uk/programmes/${programme.pid}",
         "enclosure": {
