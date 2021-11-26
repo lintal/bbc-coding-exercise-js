@@ -8,12 +8,10 @@ const p03q8kd9 = require('./data/bucket/p03q8kd9.json');
 const w13xttlc = require('./data/bucket/w13xttlc.json');
 
 describe('Add single programme to multiple corresponding feeds', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
   describe('Read/write of programmes', () => {
     beforeAll(async () => {
+      jest.clearAllMocks();
+
       await handler(
         eventFactory.create([ programme1, programme2 ])
       );
@@ -52,8 +50,15 @@ describe('Add single programme to multiple corresponding feeds', () => {
       expect(MockAWS.__putObjectSpy).toHaveBeenCalledWith({
         Bucket: 'mock-bucket-name',
         Key: 'p03q8kd9.json',
-        Body: JSON.stringify(p03q8kd9),
+        Body: expect.any(String),
       });
+
+      const callBody = JSON.parse(
+        MockAWS.__putObjectSpy.mock.calls.filter(
+          (call) => call[0].Key === 'p03q8kd9.json'
+        )[0][0].Body
+      );
+      expect(callBody).toEqual(p03q8kd9);
     });
   
     test('it should put our second programme in it\'s corresponding feed', () => {
@@ -74,13 +79,22 @@ describe('Add single programme to multiple corresponding feeds', () => {
       expect(MockAWS.__putObjectSpy).toHaveBeenCalledWith({
         Bucket: 'mock-bucket-name',
         Key: 'w13xttlc.json',
-        Body: JSON.stringify(w13xttlc),
+        Body: expect.any(String),
       });
+
+      const callBody = JSON.parse(
+        MockAWS.__putObjectSpy.mock.calls.filter(
+          (call) => call[0].Key === 'w13xttlc.json'
+        )[0][0].Body
+      );
+      expect(callBody).toEqual(w13xttlc);
     });
   });
 
   describe('Don\'t repeat S3 calls', () => {
     beforeAll(async () => {
+      jest.clearAllMocks();
+
       await handler(
         eventFactory.create([ programme1, programme2, programme3 ])
       );
