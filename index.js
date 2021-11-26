@@ -14,24 +14,51 @@ exports.handler = async (event) => {
       ).programme
     );
 
-  const S3ObjectParams = {
-    Bucket,
-    Key: `${programmes[0].parentPid}.json`,
-  };
+  const getObjectPromises = programmes.reduce((promises, programme) => {
+    if (!promises[programme.parentPid]) {
+      promises[programme.parentPid] = s3.getObject({
+        Bucket,
+        Key: `${programme.parentPid}.json`,
+      })
+        .promise()
+        .then((s3ObjectResponse) => {
+          const result = {};
+          result[programme.parentPid] = JSON.parse(s3ObjectResponse.Body);
 
-  const feed = await s3.getObject(S3ObjectParams)
-    .promise()
-    .then((s3ObjectResponse) => JSON.parse(s3ObjectResponse.Body));
+          return result;
+        });
+    }
+
+    return promises;
+  }, {});
+
+  const feeds = await Promise.all(
+    Object.values(getObjectPromises)
+  ).then((feedsList) => {
+    return feedsList.reduce((feedsObject, feedListItem) => {
+      Object.keys(feedListItem).forEach((key) => {
+        feedsObject[key] = feedListItem[key];
+      });
+
+      return feedsObject;
+    }, {});
+  });
 
   programmes.forEach((programme) => {
-    const programmeStart = moment(programme.versions[0].availability.dates.start).utc().format(dateFormat);
+    const feedPubDate = moment(feeds[programme.parentPid].channel.pubDate, dateFormat).utc();
+    const programmePubDate = moment(programme.versions[0].availability.dates.start).utc();
+    const pubDate = programmePubDate.format(dateFormat);
 
-    feed.channel.item.push({
+    if(programmePubDate.isAfter(feedPubDate)) {
+      feeds[programme.parentPid].channel.pubDate = pubDate;
+    }
+
+    feeds[programme.parentPid].channel.item.push({
       title: programme.title,
       description: programme.synopses.long,
       guid: `urn:bbc:podcast:${programme.pid}`,
       link: `https://www.bbc.co.uk/programmes/${programme.pid}`,
-      pubDate: programmeStart,
+      pubDate: programmePubDate.format(dateFormat),
       enclosure: {
         type: 'audio/mpeg',
         length: 0,
@@ -40,23 +67,13 @@ exports.handler = async (event) => {
     });
   });
 
-  const latest = programmes.sort((current, next) => {
-    const currentStart = moment(current.versions[0].availability.dates.start).utc();
-    const nextStart = moment(next.versions[0].availability.dates.start).utc();
-
-    if (currentStart.isBefore(nextStart)) {
-      return 1;
-    } else if (currentStart.isAfter(nextStart)) {
-      return -1;
-    }
-
-    return 0;
-  })[0];
-
-  feed.channel.pubDate = moment(latest.versions[0].availability.dates.start).utc().format(dateFormat);
-
-  await s3.putObject({
-    ...S3ObjectParams,
-    Body: JSON.stringify(feed),
-  }).promise();
+  await Promise.all(
+    Object.keys(feeds).map((parentPid) => {
+      return s3.putObject({
+        Bucket,
+        Key: `${parentPid}.json`,
+        Body: JSON.stringify(feeds[parentPid]),
+      }).promise();
+    }),
+  );
 }
