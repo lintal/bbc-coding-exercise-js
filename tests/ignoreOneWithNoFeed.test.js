@@ -8,7 +8,7 @@ describe('Ignore where no feed', () => {
     await handler(eventFactory.create([ publishMessage ]));
   });
 
-  // test('it should ignore programmes where an RSS document does not currently exist', () => {
-  //   // To complete...
-  // });
+  test('it should ignore programmes where an RSS document does not currently exist', () => {
+    expect(MockAWS.__putObjectSpy).not.toHaveBeenCalled();
+  });
 });

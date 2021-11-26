@@ -26,6 +26,13 @@ exports.handler = async (event) => {
           result[programme.parentPid] = JSON.parse(s3ObjectResponse.Body);
 
           return result;
+        })
+        .catch((err) => {
+          if (err.code !== 'NoSuchKey') {
+            throw err; // re-throw error.
+          }
+
+          console.log(`Skipping event(s) for non-existent feed - ${programme.parentPid}`);
         });
     }
 
@@ -36,15 +43,21 @@ exports.handler = async (event) => {
     Object.values(getObjectPromises)
   ).then((feedsList) => {
     return feedsList.reduce((feedsObject, feedListItem) => {
-      Object.keys(feedListItem).forEach((key) => {
-        feedsObject[key] = feedListItem[key];
-      });
+      if (feedListItem) {
+        Object.keys(feedListItem).forEach((key) => {
+          feedsObject[key] = feedListItem[key];
+        });
+      }
 
       return feedsObject;
     }, {});
   });
 
   programmes.forEach((programme) => {
+    if (!feeds[programme.parentPid]) {
+      return;
+    }
+
     const feedPubDate = moment(feeds[programme.parentPid].channel.pubDate, dateFormat).utc();
     const programmePubDate = moment(programme.versions[0].availability.dates.start).utc();
     const pubDate = programmePubDate.format(dateFormat);
