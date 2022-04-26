@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@types/jest": "^27.0.3",
-    "jest": "^27.4.1"
+    "jest": "^28.0.1"
   },
   "jest": {
     "setupFiles": [
